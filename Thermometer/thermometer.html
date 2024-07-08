@@ -6,15 +6,52 @@
     <title>Spendenthermometer</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100%;
+            width: 100%;
+            text-align: left;
+        }
         #thermometer-container {
-            max-width: 200px; /* Ändere diese Größe entsprechend deinen Anforderungen */
-            margin: 50px auto;
-            text-align: center;
             position: relative;
+            width: auto;
+            height: 100%;
         }
         svg {
-            width: 100%;
-            height: auto;
+            height: 100%;
+            width: auto;
+        }
+        .increments {
+            position: absolute;
+            left: 110px; /* Abstand zum Thermometer */
+            top: 20px;
+        }
+        .increment-label {
+            position: absolute;
+            font-size: 0.8em;
+        }
+        .text-container {
+            position: absolute;
+            left: 150px;
+            top: 20px;
+            text-align: left;
+        }
+        .goal {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .goal-value {
+            font-weight: normal;
+            font-size: 1.2em;
         }
         .amount-display {
             font-size: 1.2em;
@@ -32,12 +69,39 @@
     </style>
 </head>
 <body>
-    <div id="thermometer-container">
-        <div id="svg-container"></div>
-        <div class="amount-display" id="amount-display"></div>
-        <div class="tooltip" id="tooltip"></div>
-    </div>
+    <div id="container">
+        <div id="thermometer-container">
+            <svg viewBox="0 0 100 400" id="thermometer-svg" xmlns="http://www.w3.org/2000/svg">
+                <!-- Hintergrund des Thermometers -->
+                <rect x="45" y="20" width="10" height="300" fill="none" stroke="#000" stroke-width="4"/>
+                <circle cx="50" cy="350" r="30" fill="none" stroke="#000" stroke-width="4"/>
+                
+                <!-- Füllung des Kreises -->
+                <circle cx="50" cy="350" r="30" fill="#FF6384"/>
 
+                <!-- Füllung des Thermometers -->
+                <rect id="thermo-fill" x="45" y="320" width="10" height="0" fill="#FF6384"/>
+                
+                <!-- Markierungen des Thermometers -->
+                <line x1="55" y1="240" x2="75" y2="240" stroke="#000" stroke-width="2"/>
+                <line x1="55" y1="180" x2="75" y2="180" stroke="#000" stroke-width="2"/>
+                <line x1="55" y1="120" x2="75" y2="120" stroke="#000" stroke-width="2"/>
+                <line x1="55" y1="60" x2="75" y2="60" stroke="#000" stroke-width="2"/>
+                <line x1="55" y1="20" x2="75" y2="20" stroke="#000" stroke-width="2"/>
+
+                <text id="current-amount" x="50" y="355" font-size="12" text-anchor="middle" fill="#fff">0 €</text>
+            </svg>
+            <div class="increments" id="increments">
+                <!-- Die Werte werden hier von JavaScript eingefügt -->
+            </div>
+        </div>
+        <div class="text-container">
+            <div class="goal">Ziel</div>
+            <div class="goal-value" id="goal-value">0€</div>
+            <div class="amount-display" id="amount-display">Gespendet: 0 €</div>
+        </div>
+    </div>
+    <div class="tooltip" id="tooltip"></div>
     <script src="script.js"></script>
 </body>
 </html>

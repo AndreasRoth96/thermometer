@@ -1,7 +1,0 @@
-<svg viewBox="0 0 100 300" id="korbschlaeger-svg" xmlns="http://www.w3.org/2000/svg">
-    <!-- Umriss des Korbschlägers -->
-    <path id="outline" d="M50,10 L50,280" stroke="#DDDDDD" stroke-width="5" fill="none"/>
-    <circle cx="50" cy="280" r="20" stroke="#DDDDDD" stroke-width="5" fill="none"/>
-    <path id="fill" d="M50,10 L50,280" stroke="#FF6384" stroke-width="5" fill="none" stroke-dasharray="0,270"/>
-    <circle cx="50" cy="280" r="20" stroke="FF6384" stroke-width="5" fill="#FF6384"/>
-</svg>
