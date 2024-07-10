@@ -1,0 +1,1 @@
+Spendenthermometer für HL!
