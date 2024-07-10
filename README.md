@@ -1,2 +1,0 @@
-# thermometer
-Spendenthermometer für HL!
