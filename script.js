@@ -59,8 +59,7 @@ $(document).ready(function () {
         const yPosition = 220 - fillHeight; // Y-Position der Füllung berechnen
 
         // Füllung des Thermometers aktualisieren
-        $('#thermo-fill').attr('height', fillHeight);
-        $('#thermo-fill').attr('y', yPosition);
+        $('#thermo-fill').attr({ height: fillHeight, y: yPosition });
 
         // Aktuellen Betrag im Kreis aktualisieren
         $('#current-amount').text(`${amount} €`);
@@ -76,32 +75,23 @@ $(document).ready(function () {
     }
 
     function updateIncrements(goal) {
-        const incrementsContainer = $('#increments');
-        incrementsContainer.empty();
-
-        // Anzahl der Schritte
+        const ticksGroup = $('#thermometer-svg').find('#ticks');
+        ticksGroup.empty();
         const steps = 5;
-        const stepValue = goal / steps;
-
-        // Angepasste Y-Positionen der Markierungen
-        const stepPositions = {
-            0: 360,
-            1: 267,
-            2: 215,
-            3: 160,
-            4: 107,
-            5: 54
-        };
-
-        for (let i = steps; i >= 0; i--) {
-            const value = (i * stepValue).toFixed(0);
-            const position = stepPositions[i];
-            incrementsContainer.append(`<div class="increment-label" style="top: ${position}px;">${value}€</div>`);
+        const height = 200;  // Gesamthöhe der Skala
+        for (let i = 0; i <= steps; i++) {
+            const value = (i * goal / steps).toFixed(0);
+            const y = 220 - (i * height / steps);
+            // Linie
+            ticksGroup.append(`<line x1="55" y1="${y}" x2="75" y2="${y}" stroke="#666" stroke-width="1"/>`);
+            // Text
+            ticksGroup.append(`<text x="80" y="${y + 3}" font-size="10" fill="#666">${value}€</text>`);
         }
     }
 
+
     // Tooltip hinzufügen und bei Mausbewegung aktualisieren
-    $('#thermometer-container').on('mousemove', '#korbschlaeger-svg', function (e) {
+    $('#thermometer-container').on('mousemove', '#thermometer-svg', function (e) {
         const tooltip = $('#tooltip');
         const totalGoal = $('#amount-display').text().split('/')[1].split('(')[0].trim();
         const currentAmount = $('#amount-display').text().split(':')[1].split('/')[0].trim();
@@ -117,4 +107,30 @@ $(document).ready(function () {
 
     // Periodische Aktualisierung der CSV-Daten alle 30 Sekunden
     setInterval(loadCSVData, 30000);
+});
+
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.topbar');
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
+    } else {
+        header.classList.remove('scrolled');
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.topbar');
+
+    function checkScroll() {
+        if (window.scrollY > 0) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }
+
+    // Beim Scrollen auslösen
+    window.addEventListener('scroll', checkScroll);
+    // Einmal beim Laden, falls der Benutzer schon weiter unten ist
+    checkScroll();
 });

@@ -6,8 +6,26 @@
     <title>Spendenthermometer</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
+        :root {
+            --primary: #ff4c68;
+            --stroke: #333;
+            --text: #444;
+        }
         #thermometer-container {
             max-width: 200px; /* Ändere diese Größe entsprechend deinen Anforderungen */
+            margin: 50px auto;
+            text-align: center;
+            position: relative;
+        }
+        #thermo-fill {
+            transition: height 1s ease-out, y 1s ease-out;
+        }
+        #current-amount {
+            transition: transform 0.3s;
+        }
+        #thermometer-container {
+            width: 100%;
+            max-width: 200px;
             margin: 50px auto;
             text-align: center;
             position: relative;
@@ -21,14 +39,10 @@
             margin-top: 20px;
         }
         .tooltip {
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 5px;
-            border-radius: 5px;
-            display: none;
-            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
         }
+        svg:hover .tooltip { opacity: 1; }
         .goal {
             font-weight: bold;
         }
@@ -45,9 +59,97 @@
             position: absolute;
             left: 0;
         }
+        /* ─── Basis Resets ───────────────────────── */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        ul { margin: 0; padding: 0; list-style: none; }
+
+        /* ─── Topbar Container ───────────────────── */
+        .topbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 1rem;
+            transition: padding 0.3s ease, background-color 0.3s ease;
+        }
+        .topbar__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 1rem;
+        }
+
+        /* ─── Wappen ─────────────────────────────── */
+        .topbar__logo img {
+            height: 50px;
+            display: block;
+        }
+
+        /* ─── Navigation ────────────────────────── */
+        .topbar__nav ul {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .topbar__nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .topbar__nav a:hover {
+            color: var(--primary, #003d7a);
+        }
+
+        /* ─── Platz für den fixierten Header ────── */
+        /* Verhindert, dass dein Thermometer unter dem Header verschwindet */
+        body > *:not(.topbar) {
+            margin-top: 80px; /* etwas mehr als die Topbar-Höhe */
+        }
+
+        /* ─── Responsives Menü (kleine Bildschirme) ─ */
+        @media (max-width: 768px) {
+            .topbar__nav ul {
+                display: none;
+            }
+            /* Hier könntest du ein Hamburger‑Icon einblenden und per JavaScript umschalten */
+        }
+        .topbar.scrolled {
+            padding: 0.25rem 1rem;
+            background-color: #003d7a;
+        }
+        .topbar.scrolled .topbar__nav a {
+            color: #fff;
+        }
     </style>
 </head>
 <body>
+<header class="topbar">
+    <div class="topbar__inner">
+        <a href="https://www.corps-hermunduria.de/" class="topbar__logo">
+            <img src="images/wappen.png" alt="Corps Hermunduria Wappen">
+        </a>
+        <nav class="topbar__nav">
+            <ul>
+                <li><a href="https://www.corps-hermunduria.de/">Home</a></li>
+                <li><a href="https://www.corps-hermunduria.de/ueber-uns/">Über uns</a></li>
+                <li><a href="https://www.corps-hermunduria.de/studium/">Studium</a></li>
+                <li><a href="https://www.corps-hermunduria.de/wohnen-wie-gott-in-frankreich/">Wohnen wie Gott in Frankreich</a></li>
+                <li><a href="https://www.corps-hermunduria.de/kontakt/">Kontakt</a></li>
+                <li><a href="https://www.corps-hermunduria.de/veranstaltungen/">Veranstaltungen</a></li>
+                <li><a href="https://www.corps-hermunduria.de/semesterprogramm/">Semesterprogramm</a></li>
+                <!-- …restliche Links… -->
+            </ul>
+        </nav>
+    </div>
+</header>
+
     <div id="thermometer-container">
         <div class="goal">Ziel</div>
         <div class="goal-value" id="goal-value">20.000€</div>
