@@ -109,28 +109,6 @@ $(document).ready(function () {
     setInterval(loadCSVData, 30000);
 });
 
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.topbar');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.topbar');
-
-    function checkScroll() {
-        if (window.scrollY > 0) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    }
-
-    // Beim Scrollen auslösen
-    window.addEventListener('scroll', checkScroll);
-    // Einmal beim Laden, falls der Benutzer schon weiter unten ist
-    checkScroll();
 });

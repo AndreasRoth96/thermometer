@@ -5,129 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spendenthermometer</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        :root {
-            --primary: #ff4c68;
-            --stroke: #333;
-            --text: #444;
-        }
-        #thermometer-container {
-            max-width: 200px; /* Ändere diese Größe entsprechend deinen Anforderungen */
-            margin: 50px auto;
-            text-align: center;
-            position: relative;
-        }
-        #thermo-fill {
-            transition: height 1s ease-out, y 1s ease-out;
-        }
-        #current-amount {
-            transition: transform 0.3s;
-        }
-        #thermometer-container {
-            width: 100%;
-            max-width: 200px;
-            margin: 50px auto;
-            text-align: center;
-            position: relative;
-        }
-        svg {
-            width: 100%;
-            height: auto;
-        }
-        .amount-display {
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        .tooltip {
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-        svg:hover .tooltip { opacity: 1; }
-        .goal {
-            font-weight: bold;
-        }
-        .goal-value {
-            font-weight: normal;
-        }
-        .increments {
-            position: absolute;
-            left: 100px; /* Anpassung je nach Layout */
-            text-align: left;
-            top: 0;
-        }
-        .increment-label {
-            position: absolute;
-            left: 0;
-        }
-        /* ─── Basis Resets ───────────────────────── */
-        body {
-            margin: 0;
-            padding: 0;
-        }
-        ul { margin: 0; padding: 0; list-style: none; }
-
-        /* ─── Topbar Container ───────────────────── */
-        .topbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            background-color: #ffffff;
-            border-bottom: 1px solid #ddd;
-            z-index: 1000;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem 1rem;
-            transition: padding 0.3s ease, background-color 0.3s ease;
-        }
-        .topbar__inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.5rem 1rem;
-        }
-
-        /* ─── Wappen ─────────────────────────────── */
-        .topbar__logo img {
-            height: 50px;
-            display: block;
-        }
-
-        /* ─── Navigation ────────────────────────── */
-        .topbar__nav ul {
-            display: flex;
-            gap: 1.5rem;
-        }
-        .topbar__nav a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-        .topbar__nav a:hover {
-            color: var(--primary, #003d7a);
-        }
-
-        /* ─── Platz für den fixierten Header ────── */
-        /* Verhindert, dass dein Thermometer unter dem Header verschwindet */
-        body > *:not(.topbar) {
-            margin-top: 80px; /* etwas mehr als die Topbar-Höhe */
-        }
-
-        /* ─── Responsives Menü (kleine Bildschirme) ─ */
-        @media (max-width: 768px) {
-            .topbar__nav ul {
-                display: none;
-            }
-            /* Hier könntest du ein Hamburger‑Icon einblenden und per JavaScript umschalten */
-        }
-        .topbar.scrolled {
-            padding: 0.25rem 1rem;
-            background-color: #003d7a;
-        }
-        .topbar.scrolled .topbar__nav a {
-            color: #fff;
-        }
-    </style>
+    <style>html,body,iframe{ margin:0;padding:0;border:0;width:100%;height:100vh; }</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header class="topbar">
@@ -144,15 +23,13 @@
                 <li><a href="https://www.corps-hermunduria.de/kontakt/">Kontakt</a></li>
                 <li><a href="https://www.corps-hermunduria.de/veranstaltungen/">Veranstaltungen</a></li>
                 <li><a href="https://www.corps-hermunduria.de/semesterprogramm/">Semesterprogramm</a></li>
-                <!-- …restliche Links… -->
+                <li class="login-item"><a href="https://www.corps-hermunduria.de/login/" class="btn-login">Login</a></li>
             </ul>
         </nav>
     </div>
 </header>
-
+<iframe src="https://andreasroth96.github.io/thermometer/" frameborder="0"></iframe>
     <div id="thermometer-container">
-        <div class="goal">Ziel</div>
-        <div class="goal-value" id="goal-value">20.000€</div>
         <div id="svg-container"></div>
         <div class="increments" id="increments">
             <!-- Die Werte werden hier von JavaScript eingefügt -->

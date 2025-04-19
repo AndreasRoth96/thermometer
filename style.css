@@ -1,0 +1,130 @@
+:root {
+    --primary: #ff4c68;
+    --stroke: #333;
+    --text: #444;
+}
+#thermometer-container {
+    margin: calc(70vh * 0.4) auto 0;
+    max-width: 200px;
+    text-align: center;
+    position: relative;
+}
+#thermo-fill {
+    transition: height 1s ease-out, y 1s ease-out;
+}
+#current-amount {
+    transition: transform 0.3s;
+}
+svg {
+    width: 100%;
+    height: auto;
+}
+.amount-display {
+    font-size: 1.2em;
+    margin-top: 20px;
+}
+.tooltip {
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+svg:hover .tooltip { opacity: 1; }
+.goal {
+    font-weight: bold;
+}
+.goal-value {
+    font-weight: normal;
+}
+.increments {
+    position: absolute;
+    left: 100px; /* Anpassung je nach Layout */
+    text-align: left;
+    top: 0;
+}
+.increment-label {
+    position: absolute;
+    left: 0;
+}
+/* ─── Basis Resets ───────────────────────── */
+body {
+    margin: 0;
+    padding: 0;
+}
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* ─── Topbar Container ───────────────────── */
+.topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background-color: #ffffff;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.1rem 0rem 10rem 32rem;
+}
+.topbar__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
+.topbar__logo {
+    margin-left: -35rem;
+}
+/* ─── Wappen ─────────────────────────────── */
+.topbar__logo img {
+    height: 100px;
+    display: block;
+}
+
+/* ─── Navigation ────────────────────────── */
+.topbar__nav ul {
+    display: flex;
+    gap: 2.5rem;
+}
+.topbar__nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+.topbar__nav a:hover {
+    color: var(--primary, #003d7a);
+}
+/* Login‑Button im Header */
+.btn-login {
+    display: inline-block;
+    padding: 0.5rem 1rem;            /* Klickfläche */
+    background-color: #bb4af9;       /* Original‑Dunkelblau */
+    color: #ffffff;                  /* weiße Schrift */
+    border: 1px solid #003d7a;       /* gleicher Rand */
+    border-radius: 4px;              /* sanfte Rundung */
+    font-weight: 500;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s;
+}
+.btn-login:hover {
+    background-color: #ffffff;       /* invertiert */
+    color: #003d7a;
+}
+.topbar__nav li.login-item {
+    margin-left: auto;
+}
+.topbar__nav li.login-item{
+    padding-left:  2rem;
+    padding-top: -2rem;
+}
+
+/* ─── Platz für den fixierten Header ────── */
+/* Verhindert, dass dein Thermometer unter dem Header verschwindet */
+body > *:not(.topbar) {
+    margin-top: 80px; /* etwas mehr als die Topbar-Höhe */
+}
+
+/* ─── Responsives Menü (kleine Bildschirme) ─ */
+@media (max-width: 768px) {
+    .topbar__nav ul {
+        display: none;
+    }
+}
